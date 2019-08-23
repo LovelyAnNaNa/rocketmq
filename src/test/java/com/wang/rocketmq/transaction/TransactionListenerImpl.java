@@ -25,27 +25,17 @@ public class TransactionListenerImpl implements TransactionListener {
         localTrans.put(transactionId,0);
         //业务执行,处理本地事务,service
         System.out.println("hello!----Demo-Transaction");
-
-        try {
-            System.out.println("正在执行本地事务----");
-            Thread.sleep(10000);
-            System.out.println("本地事务执行成功----");
-            localTrans.put(transactionId,1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            localTrans.put(transactionId,1);
-            return LocalTransactionState.ROLLBACK_MESSAGE;
-        }
         return LocalTransactionState.COMMIT_MESSAGE;//返回事务状态信息
     }
 
     /**
-     * 消息回传
+     * 消息回查
      * @param msg
      * @return
      */
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt msg) {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         String transactionId = msg.getTransactionId();
         //获取对应事务id所执行状态
         Integer status = localTrans.get(transactionId);

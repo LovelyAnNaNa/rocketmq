@@ -16,11 +16,10 @@ import java.util.List;
 public class TransactionConsumer {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("OrderConsumer Start!");
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_consumer_order_group");
-        consumer.setNamesrvAddr("127.0.0.1:9876");
-        consumer.setConsumeMessageBatchMaxSize(2);
-        consumer.subscribe("Topic_Transaction_Demo", "*");//设置要消费的主题和过滤规则
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("test_consumer_transaction");
+        consumer.setNamesrvAddr("localhost:9876");
+
+        consumer.subscribe("Topic_test", "*");//设置要消费的主题和过滤规则
         consumer.setMessageListener(new MessageListenerOrderly() {
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
@@ -43,8 +42,6 @@ public class TransactionConsumer {
             }
         });
         consumer.start();
-        System.out.println("OrderConsumer End!");
-
-
+        System.out.println("OrderConsumer Starting!");
     }
 }
