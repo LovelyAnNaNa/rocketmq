@@ -15,21 +15,25 @@ public class AsyncProducerService {
 
     public String asyncSendMsg(String msg) {
         DefaultMQProducer producer = new DefaultMQProducer("async_producer");
+        System.out.println("开始异步发送消息");
         try {
             producer.start();
-            producer.setRetryTimesWhenSendFailed(0);
-            Message message = new Message("Topic_async_producer", "Tags", "keys_async", msg.getBytes(RemotingHelper.DEFAULT_CHARSET));;
+//            producer.setRetryTimesWhenSendFailed(2);
+            Message message = new Message("demo_controller_topic", "tags", "keys_async", msg.getBytes(RemotingHelper.DEFAULT_CHARSET));;
             producer.send(message, new SendCallback() {
                 @Override
                 public void onSuccess(SendResult sendResult) {
-                    System.out.println("异步发送消息成功");
+                    System.out.println("异步发送消息成功result: " + sendResult);
                 }
 
                 @Override
                 public void onException(Throwable e) {
-                    System.out.println("异步发送消息失败");
+                    System.out.println("异步发送消息失败e: " +e.getMessage());
                 }
             });
+
+            //避免线程提前关闭,异步消息发送失败
+            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }

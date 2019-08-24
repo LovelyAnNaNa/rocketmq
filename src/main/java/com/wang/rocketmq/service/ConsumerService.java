@@ -9,7 +9,6 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class ConsumerService implements ApplicationRunner {
     public List<String> getMsg(String topic,String tags){
         final List<String> list = new ArrayList<>();
         try {
-            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_consumer_controller_group");
+            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_controller_topic");
             consumer.setNamesrvAddr("127.0.0.1:9876");
             consumer.setConsumeMessageBatchMaxSize(2);//设置消息拉取的最大数
             consumer.subscribe(topic,tags);//设置要消费的主题和过滤规则

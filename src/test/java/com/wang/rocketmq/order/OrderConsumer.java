@@ -43,7 +43,5 @@ public class OrderConsumer {
         });
         consumer.start();
         System.out.println("OrderConsumer End!");
-
-
     }
 }
