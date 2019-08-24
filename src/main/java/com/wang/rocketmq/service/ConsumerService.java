@@ -6,6 +6,7 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,13 @@ import java.util.List;
 @Component
 public class ConsumerService implements ApplicationRunner {
 
+    //生产者的组名
+    @Value("${apache.rocketmq.consumer.PushConsumer}")
+    private String consumerGrup;
+
+    @Value("${apache.rocketmq.namesrvAddr}")
+    private String namesrvAddr;
+
     public void printMsg(String msg){
         System.out.println("Consumer接收到消息: " + msg);
     }
@@ -24,8 +32,8 @@ public class ConsumerService implements ApplicationRunner {
     public List<String> getMsg(String topic,String tags){
         final List<String> list = new ArrayList<>();
         try {
-            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_controller_topic");
-            consumer.setNamesrvAddr("127.0.0.1:9876");
+            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerGrup);
+            consumer.setNamesrvAddr(namesrvAddr);
             consumer.setConsumeMessageBatchMaxSize(2);//设置消息拉取的最大数
             consumer.subscribe(topic,tags);//设置要消费的主题和过滤规则
             consumer.setMessageListener(new MessageListenerConcurrently() {
