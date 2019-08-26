@@ -20,7 +20,6 @@ public class TransactionProducer {
         TransactionMQProducer producer = new TransactionMQProducer("test_producer_transaction");
 
         producer.setNamesrvAddr("127.0.0.1:9876");
-        producer.start();
 
         //指定消息监听对象,用于执行本地事务和消息回查
         TransactionListenerImpl transactionListener = new TransactionListenerImpl();
@@ -38,7 +37,7 @@ public class TransactionProducer {
         );
         producer.setExecutorService(pool);
         producer.setTransactionListener(transactionListener);
-        //参数 1,要发送的请求信息 2,选中指定的消息队列对象(会将所有消息对列传递进来)  3,指定对应队列的下标
+        producer.start();
         for (int i = 0; i < 5; i++) {
             Message message = new Message("Topic_test", "tags", "keys_t", ("test_dome").getBytes(RemotingHelper.DEFAULT_CHARSET));
             TransactionSendResult result = producer.sendMessageInTransaction(message, "hello_transaction");
@@ -47,7 +46,7 @@ public class TransactionProducer {
         }
 
         Thread.sleep(30000);
-
+        System.out.println("生产者执行完毕");
         producer.shutdown();
     }
 
