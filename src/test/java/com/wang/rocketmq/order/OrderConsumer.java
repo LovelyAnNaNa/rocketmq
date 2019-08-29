@@ -18,7 +18,7 @@ public class OrderConsumer {
         System.out.println("OrderConsumer Start!");
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("demo_consumer_order_group");
         consumer.setNamesrvAddr("127.0.0.1:9876");
-        consumer.setConsumeMessageBatchMaxSize(2);
+//        consumer.setConsumeMessageBatchMaxSize(2);
         consumer.subscribe("Topic_Order_Demo", "*");//设置要消费的主题和过滤规则
         consumer.setMessageListener(new MessageListenerOrderly() {
             @Override

@@ -40,12 +40,12 @@ public class TransactionProducer {
         producer.start();
         for (int i = 0; i < 5; i++) {
             Message message = new Message("Topic_test", "tags", "keys_t", ("test_dome").getBytes(RemotingHelper.DEFAULT_CHARSET));
-            TransactionSendResult result = producer.sendMessageInTransaction(message, "hello_transaction");
+            TransactionSendResult result = producer.sendMessageInTransaction(message, "");
             Thread.sleep(100);
             System.out.println("消息发送成功: " + result);
         }
 
-        Thread.sleep(30000);
+        Thread.sleep(Integer.MAX_VALUE);
         System.out.println("生产者执行完毕");
         producer.shutdown();
     }
