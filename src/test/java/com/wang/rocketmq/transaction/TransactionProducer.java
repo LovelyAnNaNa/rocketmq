@@ -1,5 +1,6 @@
 package com.wang.rocketmq.transaction;
 
+import com.wang.rocketmq.util.DateUtil;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
@@ -14,6 +15,11 @@ import java.util.concurrent.TimeUnit;
  * 顺序消息生产者
  */
 public class TransactionProducer {
+
+    public static int a  = 0;
+    public synchronized static int getNum(){
+        return ++a;
+    }
 
     public static void main(String[] args) throws Exception {
 //        DefaultMQProducer producer = new DefaultMQProducer("demo_producer_order_group");
@@ -39,13 +45,12 @@ public class TransactionProducer {
         producer.setTransactionListener(transactionListener);
         producer.start();
         for (int i = 0; i < 5; i++) {
-            Message message = new Message("Topic_test", "tags", "keys_t", ("test_dome").getBytes(RemotingHelper.DEFAULT_CHARSET));
+            Message message = new Message("Topic_test", "tags", "keys_" + i, DateUtil.getCurTime().getBytes(RemotingHelper.DEFAULT_CHARSET));
             TransactionSendResult result = producer.sendMessageInTransaction(message, "");
             Thread.sleep(100);
             System.out.println("消息发送成功: " + result);
         }
 
-        Thread.sleep(Integer.MAX_VALUE);
         System.out.println("生产者执行完毕");
         producer.shutdown();
     }
