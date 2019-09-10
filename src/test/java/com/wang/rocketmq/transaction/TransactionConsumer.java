@@ -22,6 +22,7 @@ public class TransactionConsumer {
         consumer.setMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                System.out.println("aaaaaaaaaaaaaa");
                 for (MessageExt msg : msgs){
                     //获取主体
                     String topic = msg.getTopic();
@@ -31,13 +32,15 @@ public class TransactionConsumer {
                     try {
                         String result = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
                         System.out.println("Consumer接收到消息---topic = " + topic + ",tags: " + tags + ",result: " + result);
-                    } catch (UnsupportedEncodingException e) {
+                        System.out.println("msg = " + msg);
+                        System.out.println("msgs = " + msgs);
+                    } catch (Exception e) {
                         e.printStackTrace();
                         //消息重试
                         return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                     }
                 }
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
         consumer.start();

@@ -2,9 +2,7 @@ package com.wang.rocketmq.demo;
 
 import io.vavr.*;
 import io.vavr.collection.List;
-import io.vavr.collection.Map;
 import org.junit.Test;
-import org.yaml.snakeyaml.events.StreamStartEvent;
 
 import java.math.BigInteger;
 

@@ -15,7 +15,7 @@ public class Producer {
         producer.setNamesrvAddr("localhost:9876");
         producer.start();
         Message message = new Message("Topic_Demo","Tags","keys_1","hello".getBytes(RemotingHelper.DEFAULT_CHARSET));
-        SendResult result = producer.send(message);
+        SendResult result = producer.sendMessageInTransaction(message,"");
         System.out.println(result);
         producer.shutdown();
     }

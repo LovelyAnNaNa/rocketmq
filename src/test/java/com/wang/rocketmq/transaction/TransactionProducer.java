@@ -44,12 +44,13 @@ public class TransactionProducer {
         producer.setExecutorService(pool);
         producer.setTransactionListener(transactionListener);
         producer.start();
-        for (int i = 0; i < 5; i++) {
-            Message message = new Message("Topic_test", "tags", "keys_" + i, DateUtil.getCurTime().getBytes(RemotingHelper.DEFAULT_CHARSET));
-            TransactionSendResult result = producer.sendMessageInTransaction(message, "");
+//        for (int i = 0; i < 5; i++) {
+            Message message = new Message("Topic_test", "tags", "keys_", (1 + "").getBytes(RemotingHelper.DEFAULT_CHARSET));
+        System.out.println("new String(message.getBody(),\"UTF-8\") = " + new String(message.getBody(), "UTF-8"));
+        TransactionSendResult result = producer.sendMessageInTransaction(message, 1+"");
             Thread.sleep(100);
             System.out.println("消息发送成功: " + result);
-        }
+//        }
 
         System.out.println("生产者执行完毕");
         producer.shutdown();

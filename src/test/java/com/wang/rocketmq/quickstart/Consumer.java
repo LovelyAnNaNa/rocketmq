@@ -39,7 +39,7 @@ public class Consumer {
                         return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                     }
                 }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
             }
         });
         consumer.start();//开启消费监控
