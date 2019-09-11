@@ -11,6 +11,9 @@ import java.net.URLConnection;
 
 public class DownloadPicFromURL {
 
+
+
+
     /**
      * 获取图片路径中图片的名称
      */
