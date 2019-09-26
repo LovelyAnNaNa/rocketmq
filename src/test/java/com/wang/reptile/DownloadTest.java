@@ -1,9 +1,14 @@
 package com.wang.reptile;
 
+import com.google.common.collect.ImmutableList;
+import com.wang.rocketmq.note.test;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
+
+import java.util.*;
 
 /**
  * @Auther: wbh
@@ -12,6 +17,10 @@ import org.junit.Test;
 @Slf4j
 public class DownloadTest {
 
+    @Test
+    public void testGetEqualNum(){
+    }
+    
     String path = "E:\\wang\\other\\download\\";//文件保存路径
     private DownloadPicFromURL download = new DownloadPicFromURL();
     private HttpUtil httpUtil = new HttpUtil();
@@ -21,44 +30,25 @@ public class DownloadTest {
         return  pageNo++;
     }
 
-    @Test
-    public void testManyThread(){
-        for (int i = 0; i < 10; i++) {
-            new Thread(() -> {while(true){
-                int num = getPageNo();
-                if(num > 100){
-                    break;
-                }
-                System.out.println("getNum() = " + num);
-            }}).start();
-        }
-        while (true){
-
-        }
-    }
-
     //多线程抓取图片
     @Test
     public void downloadWallhaven() {
         for (int i = 0; i < 10; i++) {
             new Thread(new DownloadWallhavenThread()).start();
         }
-        while (true){
-
-        }
+        while (true){ }
     }
 
     @Test
     public void test() {
-        String html = httpUtil.getHtmlInfoFromUrl("https://wallhaven.cc/w/482gmy", "UTF-8");
+        String html = httpUtil.getHtmlInfoFromUrl("https://wallhaven.cc/search?q=id%3A1&categories=111&purity=110&atleast=1920x1080&sorting=relevance&order=desc&page=2", "UTF-8");
         //获取页面信息
         org.jsoup.nodes.Document document = Jsoup.parse(html);
         //获取图片标签
-        Element imgId = document.getElementById("wallpaper");
-        String src = imgId.attr("src");
-        String name = download.getUrlImgName(src);
-        download.downloadPicture(src, path + name);
-
+        Elements smallImgs = document.getElementsByTag("li");
+        smallImgs.forEach(e -> {
+            System.out.println("e = " + e);
+        });
 
 //        Elements elementList = document.getElementsByTag("li");
 //        List<Map<String, String>> maps = new ArrayList<>();
