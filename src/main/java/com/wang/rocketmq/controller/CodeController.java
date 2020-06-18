@@ -31,10 +31,18 @@ public class CodeController {
             width = size;
             height = size;
         }
-        if(margin == null) margin = 0;
-        if(level == null) level = "L";
-        if(format == null) format = "gif";
-        if(content == null) content = "http://tool.yoodb.com/qrcode/generate";
+        if(margin == null) {
+            margin = 0;
+        }
+        if(level == null) {
+            level = "L";
+        }
+        if(format == null) {
+            format = "gif";
+        }
+        if(content == null) {
+            content = "http://tool.yoodb.com/qrcode/generate";
+        }
         ZxingUtil.createZxing(response, width, height, margin, level, format, content);
 
     }

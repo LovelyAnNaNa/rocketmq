@@ -1,26 +1,5 @@
 package com.wang.rocketmq.qrcode;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Hashtable;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Binarizer;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
-import com.google.zxing.WriterException;
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -28,12 +7,21 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Hashtable;
+
 public class ZxingUtil {
 
 	public static void main(String[] args) {
 		try {
 			createZxing(null,200,200,0,"L","gif","http://www.baidu.com");
-//			System.out.println(readZxing("E:\\wang\\资料\\九州\\1.gif"));
+//			System.out.println(readZxing("E:\\wang\\资料"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

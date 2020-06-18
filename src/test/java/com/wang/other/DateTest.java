@@ -2,10 +2,8 @@ package com.wang.other;
 
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
 
 /**
  * @Auther: wbh
@@ -20,5 +18,7 @@ public class DateTest {
         LocalDateTime now = LocalDateTime.now();
         System.out.println("now.format(format) = " + now.format(format));
         System.out.println("now = " + now);
+
+
     }
 }
