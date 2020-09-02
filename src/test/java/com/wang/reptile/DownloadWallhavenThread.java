@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 /**
  * @Auther: wbh
- * @Date: 2019/9/11 09:26
+ * @Date:
  * @Description:
  */
 public class DownloadWallhavenThread implements Runnable {
 
-    String path = "E:\\wang\\other\\download\\";//文件保存路径
+    String path = "D:\\download\\other\\wallhaven\\";//文件保存路径
     int totalNum = 100;
 
     @Override
@@ -29,7 +29,8 @@ public class DownloadWallhavenThread implements Runnable {
             }
             pages.add(curPage);
             try {
-                String pageUrl = "https://wallhaven.cc/search?q=id%3A1&categories=111&purity=110&atleast=1920x1080&sorting=relevance&order=desc&page=" + curPage;
+                //String pageUrl = "https://wallhaven.cc/search?q=id%3A1&categories=111&purity=110&atleast=1920x1080&sorting=relevance&order=desc&page=" + curPage;
+                String pageUrl = "https://wallhaven.cc/search?q=id:5&sorting=random&ref=fp&page=" + curPage;
                 //获取分页信息
                 String html = httpUtil.getHtmlInfoFromUrl(pageUrl, "UTF-8");
                 Document document = Jsoup.parse(html);

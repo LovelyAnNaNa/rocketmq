@@ -1,18 +1,16 @@
 package com.wang.reptile;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+@Slf4j
 public class DownloadPicFromURL {
-
-
-
 
     /**
      * 获取图片路径中图片的名称
@@ -43,9 +41,12 @@ public class DownloadPicFromURL {
             dataInputStream.close();
             fileOutputStream.close();
             output.close();
+
+            log.info("图片 {} 路径 {} 下载成功!",picUrl,path);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            log.info("图片 {} 路径 {} 下载失败!",picUrl,path);
             return false;
         }
     }

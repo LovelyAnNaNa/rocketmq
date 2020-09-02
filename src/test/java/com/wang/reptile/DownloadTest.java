@@ -1,14 +1,9 @@
 package com.wang.reptile;
 
-import com.google.common.collect.ImmutableList;
-import com.wang.rocketmq.note.test;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
-
-import java.util.*;
 
 /**
  * @Auther: wbh
@@ -21,7 +16,7 @@ public class DownloadTest {
     public void testGetEqualNum(){
     }
     
-    String path = "E:\\wang\\other\\download\\";//文件保存路径
+    String path = "D:\\download\\other\\wallhaven\\";//文件保存路径
     private DownloadPicFromURL download = new DownloadPicFromURL();
     private HttpUtil httpUtil = new HttpUtil();
     static int pageNo = 1;
@@ -33,7 +28,7 @@ public class DownloadTest {
     //多线程抓取图片
     @Test
     public void downloadWallhaven() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             new Thread(new DownloadWallhavenThread()).start();
         }
         while (true){ }
@@ -41,7 +36,8 @@ public class DownloadTest {
 
     @Test
     public void test() {
-        String html = httpUtil.getHtmlInfoFromUrl("https://wallhaven.cc/search?q=id%3A1&categories=111&purity=110&atleast=1920x1080&sorting=relevance&order=desc&page=2", "UTF-8");
+        //String html = httpUtil.getHtmlInfoFromUrl("https://wallhaven.cc/search?q=id%3A1&categories=111&purity=110&atleast=1920x1080&sorting=relevance&order=desc&page=2", "UTF-8");
+        String html = httpUtil.getHtmlInfoFromUrl("https://wallhaven.cc/search?q=id:5&sorting=random&ref=fp", "UTF-8");
         //获取页面信息
         org.jsoup.nodes.Document document = Jsoup.parse(html);
         //获取图片标签
