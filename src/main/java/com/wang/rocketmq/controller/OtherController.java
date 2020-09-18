@@ -1,17 +1,27 @@
 package com.wang.rocketmq.controller;
 
+import com.wang.rocketmq.aop.NoRepeatSubmit;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 
 @Controller
 public class OtherController {
+
+    @ResponseBody
+    @NoRepeatSubmit
+    @RequestMapping("/test")
+    public Object test(@RequestParam String str){
+        return str;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/downloadImg")
