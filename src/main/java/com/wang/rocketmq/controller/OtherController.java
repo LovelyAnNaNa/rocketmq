@@ -1,7 +1,12 @@
 package com.wang.rocketmq.controller;
 
 import com.wang.rocketmq.aop.NoRepeatSubmit;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +19,16 @@ import java.io.InputStream;
 
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OtherController {
+
+    private final MessageSource messageSource;
+
+    @ResponseBody
+    @GetMapping("/hello")
+    public String hello(){
+        return messageSource.getMessage("user.name",null, LocaleContextHolder.getLocale());
+    }
 
     @ResponseBody
     @NoRepeatSubmit

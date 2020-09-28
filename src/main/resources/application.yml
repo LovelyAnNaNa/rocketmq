@@ -12,6 +12,9 @@ apache:
     namesrvAddr: localhost:9876
 
 spring:
+  messages:
+    encoding: utf-8
+
   redis:
     # Redis数据库索引（默认为0）
     database: 0
