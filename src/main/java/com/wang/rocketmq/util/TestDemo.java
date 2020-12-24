@@ -1,16 +1,16 @@
 package com.wang.rocketmq.util;
 
 
-import java.io.File;
+import com.wang.rocketmq.util.excel.ImportExcelUtil;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class TestDemo {
 
     //读取excel
     public static void main(String[] args) throws Exception {
-        List<List<Object>> lists = ImportExcelUtil2.importExcel("Book1.xlsx", new FileInputStream("E:\\wang\\腾讯\\文件\\微信\\WeChat Files\\wxid_ksp8irer6g8122\\FileStorage\\File\\2019-09\\Book1.xlsx"));
+        List<List<Object>> lists = ImportExcelUtil.importExcel("Book1.xlsx", new FileInputStream("E:\\wang\\腾讯\\文件\\微信\\WeChat Files\\wxid_ksp8irer6g8122\\FileStorage\\File\\2019-09\\Book1.xlsx"));
         System.out.println("lists.size() = " + lists.size());
         for (List<Object> list : lists) {
             System.out.println("list.size() = " + list.size());

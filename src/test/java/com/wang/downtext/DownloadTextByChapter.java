@@ -25,12 +25,12 @@ public class DownloadTextByChapter {
 
     private HttpUtil httpUtil = new HttpUtil();
     private String baseUrl = "http://m.changdusk.com";
-    private String fileSavePath = "D:\\download\\other\\text\\";
+    private String fileSavePath = "E:\\download\\other\\text\\";
 
     @Test
     public void testDownLoadBook() throws Exception {
 //        downloadBook("62633");
-        downloadBookByPage("62633");
+        downloadBookByPage("96696");
     }
 
     /**
@@ -38,7 +38,12 @@ public class DownloadTextByChapter {
      * @param bookId
      */
     public void downloadBookByPage(String bookId) throws Exception{
-        FileWriter sw = new FileWriter(new File(fileSavePath + "火影之强者系统.txt"));
+        File saveFile = new File(fileSavePath + "大团结.txt");
+        if (!saveFile.exists()) {
+            saveFile.getParentFile().mkdirs();
+            saveFile.createNewFile();
+        }
+        FileWriter sw = new FileWriter(saveFile);
         BufferedWriter bw = new BufferedWriter(sw);
         //所有章节页数
         Integer chapterPage = getChapterTotalPage(bookId);
@@ -48,6 +53,7 @@ public class DownloadTextByChapter {
             HashMap<String, String> bookChapter = getBookChapter(bookId, j + "");
             //写入章节信息
             writerChapterToBook(bw,bookChapter);
+            bw.flush();
         }
         bw.close();
 
@@ -195,6 +201,7 @@ public class DownloadTextByChapter {
         String nextLine = null;
         for (String cName : keySet) {
             //获取对应的章节URL
+            log.info("当前章节名称: {}",cName);
             chapterUrl = bookChapter.get(cName);
             chapterUrl = chapterUrl.replaceAll(".html", "_section.html");
 
@@ -208,7 +215,7 @@ public class DownloadTextByChapter {
 
                 //防止请求过于频繁
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

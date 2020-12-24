@@ -1,16 +1,19 @@
 package com.wang.other;
 
-import com.google.common.collect.ImmutableList;
+import com.wang.rocketmq.entity.pojo.Person;
+import com.wang.rocketmq.util.excel.ExportExcelUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.xssf.usermodel.*;
+import org.junit.Test;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * @Auther: wbh
@@ -18,15 +21,42 @@ import java.util.*;
  * @Description:
  */
 public class ExcelTest {
+
+    @Test
+    public void test1(){
+        String[] colsName = {"姓名","年龄"};
+        ArrayList<HashMap> personList = new ArrayList<>();
+        HashMap<String, Object> map1 = new HashMap<>();
+        map1.put("name","张三");
+        map1.put("age",23);
+        HashMap<String, Object> map2 = new HashMap<>();
+        map2.put("name","李四");
+        map2.put("age",24);
+
+        ExportExcelUtil.exportExcel(colsName,personList,"test.xlsx","E:\\download\\other\\test.xlsx");
+    }
+
     public static void main(String[] args) {
-        ArrayList<Message> messages = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message();
-            message.setMethod("aaaaa");
-            message.setParams("bbbb");
-            messages.add(message);
+//        ArrayList<Message> messages = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Message message = new Message();
+//            message.setMethod("aaaaa");
+//            message.setParams("bbbb");
+//            messages.add(message);
+//        }
+//        exportExcel(new String[]{"a"},messages,null,"E:\\wang\\json\\1.xlsx");
+
+        //实体类中的字段数组中对应的属性下标和属性名
+        HashMap<String, Integer> fieldIndexMap = new HashMap<>();
+
+        Field[] fieldArray = Person.class.getDeclaredFields();
+        for (int i = 0; i < fieldArray.length; i++) {
+            Field field = fieldArray[i];
+            fieldIndexMap.put(field.getName(),i);
         }
-        exportExcel(new String[]{"a"},messages,null,"E:\\wang\\json\\1.xlsx");
+
+        fieldIndexMap.forEach( (k,v) -> {
+            System.out.println(k + "," + v); });
     }
     public static void exportExcel(String[] headers, Collection dataset, String fileName,String filePath) {
         // 声明一个工作薄
