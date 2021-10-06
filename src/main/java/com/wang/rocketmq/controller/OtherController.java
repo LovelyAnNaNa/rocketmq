@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -23,6 +24,12 @@ import java.io.InputStream;
 public class OtherController {
 
     private final MessageSource messageSource;
+
+    @RequestMapping("/aaa")
+    @ResponseBody
+    public String test11(HttpServletRequest request){
+        return request.getRequestURL().toString();
+    }
 
     @ResponseBody
     @GetMapping("/hello")

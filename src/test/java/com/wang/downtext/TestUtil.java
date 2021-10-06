@@ -1,6 +1,9 @@
 package com.wang.downtext;
 
 import com.wang.reptile.HttpUtil;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,6 +20,18 @@ public class TestUtil {
     private DownloadByWebInterface webDown = new DownloadByWebInterface();
     private HttpUtil httpUtil = new HttpUtil();
     private String baseUrl = "http://m.changdusk.com";
+
+    @Test
+    public void test11() throws Exception{
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url("https://wap.changduzw.com/62/96696_1/")
+                .method("GET", null)
+                .build();
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string().toString());
+    }
 
     /**
      * 获取章节详情

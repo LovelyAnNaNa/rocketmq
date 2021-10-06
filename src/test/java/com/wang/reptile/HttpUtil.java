@@ -19,9 +19,9 @@ public class HttpUtil {
     private String referer = "http://m.changdusk.com";
 
     @Test
-    public void testaa(){
+    public void testaa() {
         String str = "indexaaa";
-        str.replaceAll("aaa","");
+        str.replaceAll("aaa", "");
         System.out.println("str = " + str);
     }
 
@@ -48,13 +48,13 @@ public class HttpUtil {
     public String getHtmlInfoFromUrl(String url, String encoding) {
         StringBuffer sb = new StringBuffer();
         InputStreamReader isr = null;
-        try{
-            URL urlObj = new  URL(url);
+        try {
+            URL urlObj = new URL(url);
             URLConnection uc = urlObj.openConnection();
-            //uc.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Mobile Safari/537.36");
+            uc.setRequestProperty("User-Agent", "PostmanRuntime/7.28.0");
 //            uc.setRequestProperty("Connection","keep-alive");
-//            uc.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-            //uc.setRequestProperty("Accept-Encoding","gzip, deflate");
+            uc.setRequestProperty("Accept", "*/*");
+            uc.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
 //            uc.setRequestProperty("Accept-Language","zh-CN,zh;q=0.9");
 //            uc.setRequestProperty("Referer",referer);
 //            uc.setRequestProperty("Host","m.changdusk.com");
@@ -66,12 +66,12 @@ public class HttpUtil {
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
-        }finally {
+        } finally {
             referer = url;
             try {
-                if(isr != null){
+                if (isr != null) {
                     isr.close();
                 }
             } catch (IOException e) {
@@ -82,5 +82,22 @@ public class HttpUtil {
         return str;
     }
 
+
+    public String getHtmlInfoFromUrl2(String url) {
+        Response response = null;
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .method("GET", null)
+                    .build();
+            response = client.newCall(request).execute();
+            return response.body().string().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

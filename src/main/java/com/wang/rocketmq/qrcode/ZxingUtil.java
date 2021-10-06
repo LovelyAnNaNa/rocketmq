@@ -1,4 +1,5 @@
 package com.wang.rocketmq.qrcode;
+
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -14,14 +15,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Hashtable;
 
 public class ZxingUtil {
 
 	public static void main(String[] args) {
 		try {
-			createZxing(null,200,200,0,"L","gif","http://www.baidu.com");
-//			System.out.println(readZxing("E:\\wang\\资料"));
+//			createZxing(null,200,200,0,"L","gif","http://www.baidu.com");
+			System.out.println(readZxing("https://img.alicdn.com/imgextra/O1CN01stSXav2KogRTjSbjO_!!361579604-2-xcode.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,11 +70,15 @@ public class ZxingUtil {
 	 */
 	public static String readZxing(String qrcodeUrl) throws IOException, NotFoundException {
 		MultiFormatReader read = new MultiFormatReader();
-//		URL url = new URL(qrcodeUrl);
-//		HttpURLConnection httpUrl = (HttpURLConnection) url.openConnection();
-//		httpUrl.connect();
-//		BufferedImage image = ImageIO.read(httpUrl.getInputStream());
-		BufferedImage image = ImageIO.read(new FileInputStream(new File(qrcodeUrl)));
+		BufferedImage image = null;
+		if (qrcodeUrl.contains("http")) {
+			URL url = new URL(qrcodeUrl);
+			HttpURLConnection httpUrl = (HttpURLConnection) url.openConnection();
+			httpUrl.connect();
+			image = ImageIO.read(httpUrl.getInputStream());
+		}else{
+			image = ImageIO.read(new FileInputStream(new File(qrcodeUrl)));
+		}
 		Binarizer binarizer = new HybridBinarizer(new BufferedImageLuminanceSource(image));
 		BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
 		Result res = read.decode(binaryBitmap);

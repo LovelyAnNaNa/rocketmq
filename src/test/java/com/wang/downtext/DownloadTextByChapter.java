@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Set;
 public class DownloadTextByChapter {
 
     private HttpUtil httpUtil = new HttpUtil();
-    private String baseUrl = "http://m.changdusk.com";
+    private String baseUrl = "https://wap.changduzw.com";
     private String fileSavePath = "E:\\download\\other\\text\\";
 
     @Test
@@ -67,9 +68,6 @@ public class DownloadTextByChapter {
         FileWriter sw = new FileWriter(new File(fileSavePath + "火影之强者系统.txt"));
         BufferedWriter bw = new BufferedWriter(sw);
         String chapterUrl = null;
-//        String chapterUrl = "/62/bookId/8855413.html";
-//        chapterUrl = chapterUrl.replaceAll("bookId",bookId);
-        //替换为章节页码格式的url
 
 
         //章节列表 key:章节名称,value:章节url
@@ -220,6 +218,11 @@ public class DownloadTextByChapter {
                     e.printStackTrace();
                 }
                 String html = httpUtil.getHtmlInfoFromUrl2(baseUrl + curChapterUrl, "UTF-8");
+                if (StringUtils.isBlank(html)){
+                    i--;
+                    continue;
+                }
+
                 //获取页面信息
                 Document htmlDoc = Jsoup.parse(html);
                 //第一次循环获取总页数,并赋值到遍历到总循环次数中
@@ -257,13 +260,13 @@ public class DownloadTextByChapter {
      * @return key:章节名称,value:章节url
      */
     public HashMap<String, String> getBookChapter(String bookId, String section) {
-        String chapterUrl = "/62/bookId_section/";
+        String chapterUrl = "/96/bookId_section/";
         chapterUrl = chapterUrl.replaceAll("bookId", bookId);
         chapterUrl = chapterUrl.replaceAll("section", section);
         //key:章节名称,value:章节url
-        HashMap<String, String> chapterMap = chapterMap = new HashMap<>(20);;
+        HashMap<String, String> chapterMap = chapterMap = new LinkedHashMap<>(20);;
 
-        String html = httpUtil.getHtmlInfoFromUrl(baseUrl + chapterUrl, "UTF-8");
+        String html = httpUtil.getHtmlInfoFromUrl2(baseUrl + chapterUrl);
         //获取页面信息
         Document htmlDoc = Jsoup.parse(html);
         Elements chapterEleList = htmlDoc.getElementsByClass("chapter");
